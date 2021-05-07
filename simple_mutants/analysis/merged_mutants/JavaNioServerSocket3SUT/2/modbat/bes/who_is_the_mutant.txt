@@ -1,0 +1,2 @@
+mutant_number = 27 
+of the class = JavaNioServerSocket3SUT

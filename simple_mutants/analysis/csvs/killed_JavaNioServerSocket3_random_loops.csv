@@ -1,0 +1,14 @@
+model_name,search,loop,mutant_number,depth,actual_tests,time_taken,status,return_code,failed_tests,seed
+JavaNioServerSocket3,random,loops,0,1,1,0.46925806999206543,killed_mutant,0,1,665f06e8
+JavaNioServerSocket3,random,loops,2,4,4,0.46659088134765625,killed_mutant,0,1,498ee44c
+JavaNioServerSocket3,random,loops,4,1,1,0.5163946151733398,killed_mutant,0,1,388e390e
+JavaNioServerSocket3,random,loops,6,4,?,0.4698526859283447,invoke_error,1,?,6f2ba2b9
+JavaNioServerSocket3,random,loops,7,1,1,0.4697263240814209,killed_mutant,0,1,7ade7778
+JavaNioServerSocket3,random,loops,11,1,?,0.5165364742279053,invoke_error,1,?,7c13799f
+JavaNioServerSocket3,random,loops,12,1,1,0.5164217948913574,killed_mutant,0,1,5f79ae6e
+JavaNioServerSocket3,random,loops,18,1,?,0.5668399333953857,invoke_error,1,?,53d9dc32
+JavaNioServerSocket3,random,loops,19,1,1,0.5164434909820557,killed_mutant,0,1,2fbd28b0
+JavaNioServerSocket3,random,loops,21,1,1,0.5166079998016357,killed_mutant,0,1,201f550f
+JavaNioServerSocket3,random,loops,23,1,1,0.5170936584472656,killed_mutant,0,1,1f5524e6
+JavaNioServerSocket3,random,loops,26,4,1,0.4679086208343506,killed_mutant,0,1,74090bd8
+JavaNioServerSocket3,random,loops,27,1,1,0.416745662689209,killed_mutant,0,1,4e1d9dae

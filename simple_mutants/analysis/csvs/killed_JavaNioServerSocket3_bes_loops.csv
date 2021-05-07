@@ -1,0 +1,13 @@
+model_name,search,loop,mutant_number,depth,actual_tests,time_taken,status,return_code,failed_tests,seed
+JavaNioServerSocket3,bes,loops,0,3,15,0.5667440891265869,killed_mutant,0,1,7d7eeb2d
+JavaNioServerSocket3,bes,loops,2,6,188,1.1676313877105713,killed_mutant,0,1,5bf8f996
+JavaNioServerSocket3,bes,loops,4,3,15,0.666424036026001,killed_mutant,0,1,471d2c81
+JavaNioServerSocket3,bes,loops,7,3,15,0.6667709350585938,killed_mutant,0,1,7d7eeb2d
+JavaNioServerSocket3,bes,loops,11,1,?,0.6163184642791748,invoke_error,1,?,41d08679
+JavaNioServerSocket3,bes,loops,12,6,204,1.1678738594055176,killed_mutant,0,1,5bf8f996
+JavaNioServerSocket3,bes,loops,18,1,?,0.5663578510284424,invoke_error,1,?,41d08679
+JavaNioServerSocket3,bes,loops,19,3,6,0.5667705535888672,killed_mutant,0,1,7d7eeb2d
+JavaNioServerSocket3,bes,loops,21,4,20,0.6165060997009277,killed_mutant,0,1,24505cb5
+JavaNioServerSocket3,bes,loops,23,4,20,0.6168961524963379,killed_mutant,0,1,24505cb5
+JavaNioServerSocket3,bes,loops,26,6,188,0.7679598331451416,killed_mutant,0,1,5bf8f996
+JavaNioServerSocket3,bes,loops,27,5,22,0.5184106826782227,killed_mutant,0,1,258d49ec

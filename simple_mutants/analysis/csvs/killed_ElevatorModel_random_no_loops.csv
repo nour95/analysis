@@ -1,0 +1,10 @@
+model_name,search,loop,mutant_number,depth,actual_tests,time_taken,status,return_code,failed_tests,seed
+ElevatorModel,random,no_loops,0,1,1,0.7265703678131104,killed_mutant,0,1,2b120c21
+ElevatorModel,random,no_loops,1,1,1,0.7682726383209229,killed_mutant,0,1,69418287
+ElevatorModel,random,no_loops,3,1,1,0.77764892578125,killed_mutant,0,1,1cb8d8f0
+ElevatorModel,random,no_loops,22,1,1,0.5196774005889893,killed_mutant,0,1,74bc3536
+ElevatorModel,random,no_loops,23,1,1,0.4661595821380615,killed_mutant,0,1,4338398c
+ElevatorModel,random,no_loops,24,1,1,0.46686887741088867,killed_mutant,0,1,48578139
+ElevatorModel,random,no_loops,25,1,1,0.41695547103881836,killed_mutant,0,1,2c6a7c
+ElevatorModel,random,no_loops,27,11,8,0.4164743423461914,killed_mutant,0,1,f754199
+ElevatorModel,random,no_loops,28,110,70,0.6176917552947998,killed_mutant,0,1,f57b97f
