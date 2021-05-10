@@ -1,8 +1,8 @@
 model_name,search,loop,mutant_number,depth,actual_tests,time_taken,status,return_code,failed_tests,seed
-SimpleModel,bes,loops,2,50,6,0.6163454055786133,killed_mutant,0,1,685e347b
-SimpleModel,bes,loops,3,50,6,0.5666279792785645,killed_mutant,0,1,685e347b
-SimpleModel,bes,loops,4,50,6,0.5664875507354736,killed_mutant,0,1,685e347b
-SimpleModel,bes,loops,5,50,6,0.5666608810424805,killed_mutant,0,1,685e347b
-SimpleModel,bes,loops,6,50,6,0.6165149211883545,killed_mutant,0,1,685e347b
-SimpleModel,bes,loops,7,50,5,0.46730637550354004,killed_mutant,0,1,685e347b
-SimpleModel,bes,loops,9,50,5,0.6245379447937012,killed_mutant,0,1,685e347b
+SimpleModel,bes,loops,2,50,6,1.9442777633666992,killed_mutant,0,1,685e347b
+SimpleModel,bes,loops,3,50,6,2.215441942214966,killed_mutant,0,1,685e347b
+SimpleModel,bes,loops,4,50,6,1.6338160037994385,killed_mutant,0,1,685e347b
+SimpleModel,bes,loops,5,50,6,1.9515190124511719,killed_mutant,0,1,685e347b
+SimpleModel,bes,loops,6,50,6,2.0508248805999756,killed_mutant,0,1,685e347b
+SimpleModel,bes,loops,7,50,5,1.7891972064971924,killed_mutant,0,1,685e347b
+SimpleModel,bes,loops,9,50,5,1.1848089694976807,killed_mutant,0,1,685e347b

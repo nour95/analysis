@@ -1,0 +1,2 @@
+mutant_number = 144 
+of the class = LinkedList

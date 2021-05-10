@@ -1,0 +1,2 @@
+mutant_number = 50 
+of the class = ArrayList

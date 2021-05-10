@@ -1,8 +1,8 @@
 model_name,search,loop,mutant_number,depth,actual_tests,time_taken,status,return_code,failed_tests,seed
-ElevatorModel,bes,no_loops,0,2,4,0.5194430351257324,killed_mutant,0,1,2bcc2315
-ElevatorModel,bes,no_loops,1,2,4,0.46764421463012695,killed_mutant,0,1,2bcc2315
-ElevatorModel,bes,no_loops,3,2,4,0.5662634372711182,killed_mutant,0,1,2bcc2315
-ElevatorModel,bes,no_loops,22,2,4,0.5662987232208252,killed_mutant,0,1,2bcc2315
-ElevatorModel,bes,no_loops,23,2,1,0.5661461353302002,killed_mutant,0,1,2bcc2315
-ElevatorModel,bes,no_loops,24,2,4,0.5663306713104248,killed_mutant,0,1,2bcc2315
-ElevatorModel,bes,no_loops,25,2,5,0.6164321899414062,killed_mutant,0,1,2bcc2315
+ElevatorModel,bes,no_loops,0,2,4,1.6516108512878418,killed_mutant,0,1,2bcc2315
+ElevatorModel,bes,no_loops,1,2,4,2.0092520713806152,killed_mutant,0,1,2bcc2315
+ElevatorModel,bes,no_loops,3,2,4,2.031003952026367,killed_mutant,0,1,2bcc2315
+ElevatorModel,bes,no_loops,20,2,4,0.8484711647033691,killed_mutant,0,1,2bcc2315
+ElevatorModel,bes,no_loops,21,2,1,0.8220779895782471,killed_mutant,0,1,2bcc2315
+ElevatorModel,bes,no_loops,22,2,4,0.8767468929290771,killed_mutant,0,1,2bcc2315
+ElevatorModel,bes,no_loops,23,2,5,0.7798430919647217,killed_mutant,0,1,2bcc2315

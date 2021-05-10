@@ -72,6 +72,7 @@ def set_subplot_extra_options(ax, d_map):
     ax.set_title(f"{d_map['title']}")
     ax.set_xlabel(f"{d_map['x_label']}")
     ax.set_ylabel(f"{d_map['y_label']}")
+#     ax
     ax.grid(True)
     
 #     ax.plt.ylim()([0, 100])
@@ -87,9 +88,11 @@ def set_subplot_extra_options(ax, d_map):
 def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map):
     all_data = extract_unique_as_array(csv_f, unique_list, x_name, y_name)
     labels = unique_list
+    abc = np.log(labels)
     bplot1 = ax.boxplot(all_data,
 #                          vert=True,  # vertical box alignment
 #                          patch_artist=True,  # fill with color
+                          positions=abc,
                          labels=labels)  # will be used to label x-ticks
 #     set_subplot_extra_options(bplot1)
     set_subplot_extra_options(ax, data_map)
@@ -115,13 +118,13 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     
 #     fig.set_figwidth(map_bes['width'])
 #     fig.set_figheight(map_bes['hight'])
-    
+#     plt.xscale("log")  #TODO
     plt.show()
     img_path = os.path.join(img_general_path, f"{map_bes['model_name']}")
     os.makedirs(img_path, exist_ok=True)
-    fig.savefig(os.path.join(img_path,
-                        f"{map_bes['y_label']}_bes_rand_{map_bes['model_name']}_{map_bes['loopOpt']}.svg"), 
-                        format="svg")
+#     fig.savefig(os.path.join(img_path,
+#                         f"{map_bes['y_label']}_bes_rand_{map_bes['model_name']}_{map_bes['loopOpt']}.svg"), 
+#                         format="svg")
 
     
 def get_csv_unique(model_name, loopOpt):  
