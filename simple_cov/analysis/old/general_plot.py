@@ -92,22 +92,20 @@ def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map, graph_typ
     labels = unique_list
     if graph_type == 'random':
         # pos = np.logspace(labels) #np.log(labels)
-        pos = np.logspace(1,5, len(unique_list))
+        pos = np.logspace(-0.1,2.6,8)
         w = 0.1
-        # b = 10
-        # width = lambda p, w: 7**(np.log10(p)+w/2.)-7**(np.log10(p)-w/2.)
+        width = lambda p, w: 10**(np.log10(p)+w/2.)-10**(np.log10(p)-w/2.)
 
         bplot1 = ax.boxplot(all_data,
-                        # positions=[1, 2, 4, 6, 9, 12, 16, 20],  #pos,
-                        positions=[1, 2, 3.5, 6, 9, 13, 17.5, 22.5],  #pos,
-                        widths= [.6]*len(unique_list), #pos, #width(pos,w),
+                        #         vert=True,  # vertical box alignment
+                        #         patch_artist=True,  # fill with color
+                        # positions=pos,
+                        # widths=width(pos,w),
                         labels=labels)
         
 
         # ax.set_xscale("log")
-        # ax.xticks([0, 1, 2], ['January', 'February', 'March'], rotation=45)  #
-        # ax.set_xticks(np.log(unique_list))
-        ax.set_xticklabels(unique_list, rotation=40)
+        ax.xticks([0, 1, 2], ['January', 'February', 'March'], rotation=45)  #
 
 
     else:
