@@ -51,24 +51,6 @@ def filter_desired_m_by_list(csv_file, desired_mutants,creteria ):
     return desired_c_list
 
 
-def filter_desired_m_and_fix(csv_file, desired_mutants, creteria, otherwise_value):
-    
-    existed_mutants_list = csv_file['mutant_number'].tolist()
-    desired_c_list = []
-    for m in desired_mutants:
-        if int(m) in existed_mutants_list:
-            c = csv_file[csv_file['mutant_number'] == int(m)][creteria].values[0]
-            desired_c_list.append(c)
-#             print(f'founded c: {c}')
-
-        else: 
-            desired_c_list.append(otherwise_value)
-            print(f'mutant {m} not_found')
-            
-    return desired_c_list
-
-
-
 def str_arr_to_int(arr):
     res = []
     for a in arr:
@@ -104,15 +86,12 @@ def get_float_column(csv_file, field_name):
     return float_array
 
 
-
-
-
 def get_longest_list(m):
     
     if len(m[0]) >= len(m[1])  and len(m[0]) >= len(m[2])and len(m[0]) >= len(m[3]):
             
         return 0
-    elif len(m[1]) >= len(m_lists[0]) and len(m[1]) >= len(m_lists[2]) and len(m[1]) >= len(m_lists[3]):
+    elif len(m[1]) >= len(m[0]) and len(m[1]) >= len(m[2]) and len(m[1]) >= len(m[3]):
             
         return 1
     elif len(m[2]) >= len(m[0]) and len(m[2]) >= len(m[1]) and len(m[2]) >= len(m[3]):
@@ -122,7 +101,6 @@ def get_longest_list(m):
         return 3
 
 
-    
 def make_same_size_lists(big_list, small_m_list, small_cretieria_list):
     for i, v in enumerate(big_list):
         if i > len(small_m_list)-1:
@@ -168,12 +146,31 @@ def get_cretiera_all(dfs, creteria):
 
 
 
+def filter_desired_m_and_fix(csv_file, desired_mutants, creteria, otherwise_value, timeout):
+    
+    existed_mutants_list = csv_file['mutant_number'].tolist()
+    desired_c_list = []
+    timeout_list = []
+    for m in desired_mutants:
+        if int(m) in existed_mutants_list:
+            c = csv_file[csv_file['mutant_number'] == int(m)][creteria].values[0]
+            desired_c_list.append(c)
+            timeout_list.append(0)
+
+        else: 
+            desired_c_list.append(otherwise_value)
+            timeout_list.append(timeout)
+            print(f'mutant {m} not_found')
+            
+    return (desired_c_list, timeout_list)
+
+
 #new one
-def get_cretiera_all_desired_m(dfs, desired_mutants, creteria, otherwise_value):
-    bes_lo_c     = filter_desired_m_and_fix(dfs[0], desired_mutants, creteria, otherwise_value)
-    rand_lo_c    = filter_desired_m_and_fix(dfs[1], desired_mutants, creteria, otherwise_value)
-    bes_no_lo_c  = filter_desired_m_and_fix(dfs[2], desired_mutants, creteria, otherwise_value)
-    rand_no_lo_c = filter_desired_m_and_fix(dfs[3], desired_mutants, creteria, otherwise_value)
+def get_cretiera_all_desired_m(dfs, desired_mutants, creteria, otherwise_value, timeout):
+    bes_lo_c     = filter_desired_m_and_fix(dfs[0], desired_mutants, creteria, otherwise_value, timeout)
+    rand_lo_c    = filter_desired_m_and_fix(dfs[1], desired_mutants, creteria, otherwise_value, timeout)
+    bes_no_lo_c  = filter_desired_m_and_fix(dfs[2], desired_mutants, creteria, otherwise_value, timeout)
+    rand_no_lo_c = filter_desired_m_and_fix(dfs[3], desired_mutants, creteria, otherwise_value, timeout)
 
     c_lists = (bes_lo_c, rand_lo_c, bes_no_lo_c, rand_no_lo_c)
     return c_lists
@@ -181,9 +178,9 @@ def get_cretiera_all_desired_m(dfs, desired_mutants, creteria, otherwise_value):
 
 
 
-def get_cretiera_only_2(dfs, desired_mutants, creteria, otherwise_value):
-    bes_lo_c     = filter_desired_m_and_fix(dfs[0], desired_mutants, creteria, otherwise_value)
-    bes_no_lo_c  = filter_desired_m_and_fix(dfs[2], desired_mutants, creteria, otherwise_value)
+def get_cretiera_only_2(dfs, desired_mutants, creteria, otherwise_value, timeout):
+    bes_lo_c     = filter_desired_m_and_fix(dfs[0], desired_mutants, creteria, otherwise_value, timeout)
+    bes_no_lo_c  = filter_desired_m_and_fix(dfs[2], desired_mutants, creteria, otherwise_value, timeout)
 
     c_lists = (bes_lo_c, bes_no_lo_c)
     return c_lists
@@ -209,23 +206,6 @@ def get_mutation_score(csv_file, all_mutants):
 
 
 
-def prepare_plottting(m_lists, c_lists, creteria):
-    biggest = get_longest_list(m_lists)
-    print(biggest)
-    
-    (m_lists, 'killed_mutant')
-    print_4_models(c_lists, creteria)
-
-    for i, l in enumerate(m_lists):
-        make_same_size_lists(m_lists[biggest], l, c_lists[i])
-
-    print_4_models(m_lists, 'killed_mutant')
-    print_4_models(c_lists, creteria)
-    
-    return biggest
-
-
-
 def plot_4_bars(labels, data_list, d_map):
     
     bes_l, rand_l, bes_no_l, rand_no_l = data_list
@@ -243,13 +223,21 @@ def plot_4_bars(labels, data_list, d_map):
     
     fig, ax = plt.subplots( figsize=(d_map['fig_width'], d_map['fig_hight']))
 
-                           #,gridspec_kw={'width_ratios': [map_bes['width_ratio'], map_rand['width_ratio']]})
     
-    rects1 = ax.bar(x - indent, bes_l, width, label=d_map['bes_l_label'])
-    rects2 = ax.bar(x + indent, rand_l, width, label=d_map['random_l_label'])
+    rects4 = ax.bar(x - 3*indent, rand_no_l[0], width, label=d_map['random_no_l_label'], edgecolor='black', color='white', hatch='//')
+    rects1 = ax.bar(x - indent, bes_l[0], width, label=d_map['bes_l_label'], edgecolor='black', color='#9FACCE', hatch='O')
+    rects2 = ax.bar(x + indent, rand_l[0], width, label=d_map['random_l_label'], edgecolor='black', color='#617CB3', hatch='.')
     
-    rects3 = ax.bar(x + 3*indent, bes_no_l, width, label=d_map['bes_no_l_label'])
-    rects4 = ax.bar(x - 3*indent, rand_no_l, width, label=d_map['random_no_l_label'])
+    rects3 = ax.bar(x + 3*indent, bes_no_l[0], width, label=d_map['bes_no_l_label'], edgecolor='black', color='#0061B5', hatch='x') # 0061B5  # 004E90
+
+
+    #time outs:
+    time4 = ax.bar(x - 3*indent, rand_no_l[1], width, label=f'{d_map["random_no_l_label"]} timeout', edgecolor='black', color='white', hatch='//-')
+    time1 = ax.bar(x - indent, bes_l[1], width, label=f'{d_map["bes_l_label"]} timeout', edgecolor='black', color='#9FACCE', hatch='O-')
+    time2 = ax.bar(x + indent, rand_l[1], width, label=f'{d_map["random_l_label"]} timeout', edgecolor='black', color='#617CB3', hatch='.-')
+    
+    time3 = ax.bar(x + 3*indent, bes_no_l[1], width, label=f'{d_map["bes_no_l_label"]} timeout',  edgecolor='black', color='#0061B5', hatch='x-')
+    
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_xlabel(d_map['x_label'])
@@ -258,10 +246,7 @@ def plot_4_bars(labels, data_list, d_map):
     ax.set_title(d_map['title'])
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
-    ax.legend()
-
-#     ax.bar_label(rects1, padding=3)
-#     ax.bar_label(rects2, padding=3)
+    ax.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0., handleheight=3) 
 
     fig.tight_layout()
     
@@ -272,7 +257,7 @@ def plot_4_bars(labels, data_list, d_map):
     img_path = os.path.join(img_general_path, f"{d_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
-            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}.svg"), 
+            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.svg"), 
             format="svg")
 
 
@@ -280,6 +265,8 @@ def plot_4_bars(labels, data_list, d_map):
 def plot_2_bars(labels, data_list, d_map):
     
     bes_l, bes_no_l = data_list
+    # print(bes_l)
+    # print(bes_no_l)
     
     x = d_map['x_distance'] * np.arange(len(labels)) # 1
     width = d_map['bar_width'] #0.35  # the width of the bars
@@ -288,8 +275,12 @@ def plot_2_bars(labels, data_list, d_map):
 
     fig, ax = plt.subplots(figsize=(d_map['fig_width'], d_map['fig_hight']))
 
-    rects1 = ax.bar(x - width/2, bes_l, width, label=d_map['bes_l_label'])
-    rects2 = ax.bar(x + width/2, bes_no_l, width, label=d_map['bes_no_l_label'])
+    rects1 = ax.bar(x - indent, bes_l[0], width, label=d_map['bes_l_label'], edgecolor='black', color='white', hatch='.')
+    rects3 = ax.bar(x + indent, bes_no_l[0], width, label=d_map['bes_no_l_label'], edgecolor='black', color='#9FACCE', hatch='x')
+
+    time1 = ax.bar(x - indent, bes_l[1], width, label=f'{d_map["bes_l_label"]} timeout', edgecolor='black', color='white', hatch='.-')
+    time3 = ax.bar(x + indent, bes_no_l[1], width, label=f'{d_map["bes_no_l_label"]} timeout',  edgecolor='black', color='#9FACCE', hatch='x-')
+    
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_xlabel(d_map['x_label'])
@@ -298,10 +289,8 @@ def plot_2_bars(labels, data_list, d_map):
     ax.set_title(d_map['title'])
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
-    ax.legend()
+    ax.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0., handleheight=3) 
 
-#     ax.bar_label(rects1, padding=3)
-#     ax.bar_label(rects2, padding=3)
 
     fig.tight_layout()
 
@@ -312,7 +301,7 @@ def plot_2_bars(labels, data_list, d_map):
     img_path = os.path.join(img_general_path, f"{d_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
-            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}.svg"), 
+            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.svg"), 
             format="svg")
 
 
@@ -320,10 +309,56 @@ def plot_2_bars(labels, data_list, d_map):
 
 
 
-# x = desired_mutants.remove('81').remove('76')
+def get_over_bound_element(c_list, m_labels, bound):
+    res_list = set()
+    over_bounded_mutant = set()
+    for l in c_list:
+        for i, c in enumerate(l[0]):
+            # print(c)
+            if c >= bound:
+                mutant = m_labels[i]
+                res = (mutant, c_list[0][0][i], c_list[1][0][i], c_list[2][0][i], c_list[3][0][i])
+                res_list.add(res)
+                over_bounded_mutant.add(mutant)
+    
+    return (res_list, over_bounded_mutant)
 
-# delete_fucn = lambda x: x not in ['76', '81']
-# x = filter(delete_fucn, desired_mutants)
+
+def extract_desired_without_over_bound(original, except_list):
+    
+    # print(type(except_list))
+    # print(except_list)
+
+    new_list = original.copy()
+    for e in except_list:
+        # print(e)
+        # print(type(new_list))
+        # print(new_list)
+        new_list.remove(e)
+
+    # print(new_list)
+    return new_list
+
+
+def latex_table_maker(title, over_bound_list):
+    data = []
+    for e in over_bound_list:
+        data.append(f'{e[0]} & {e[1]}    & {e[2]}         & {e[3]}       & {e[4]}          \\\\ \\hline')
+
+    string_data = '\n'.join(data)
+    table_total = f'''\\begin{{table}}[{title}]
+\\begin{{tabular}}{{|c|c|c|c|c|}}
+\\hline
+& BES (Loops) & Random (Loops) & BES (no self loop) & Random (no self loop) \\\\ \hline
+{string_data}
+\end{{tabular}}
+\end{{table}}'''
+
+    return table_total
+
+
+
+
 
 
 
