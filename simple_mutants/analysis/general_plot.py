@@ -339,7 +339,7 @@ def extract_desired_without_over_bound(original, except_list):
 def latex_table_maker(title, over_bound_list):
     data = []
     for e in over_bound_list:
-        data.append(f'{e[0]} & {e[1]}    & {e[2]}         & {e[3]}       & {e[4]}          \\\\ \\hline')
+        data.append(f'{e[0]} & {latex_h(e[1])}    & {latex_h(e[2])}         & {latex_h(e[3])}       & {latex_h(e[4])}          \\\\ \\hline')
 
     string_data = '\n'.join(data)
     table_total = f'''\\begin{{table}}[{title}]
@@ -353,8 +353,11 @@ def latex_table_maker(title, over_bound_list):
     return table_total
 
 
-
-
+def latex_h(e):
+    if e > 0:
+        return e
+    else: 
+        return "TIMEOUT"
 
 
 
