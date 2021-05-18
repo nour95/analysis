@@ -65,6 +65,17 @@ def extract_unique_as_map(csv_file, unique_depths, unique_field, by_field):
     return res_map
 
 
+def extract_unique_as_list(csv_file, unique_depths, unique_field, by_field):
+    res_list = []
+    for depth in unique_depths:
+        list_unique = csv_file[csv_file[unique_field]
+                               == depth][by_field].tolist()
+        list_data = list(set(list_unique))
+        # print(list_data)
+        res_list.append(list_data[0])
+    return res_list
+
+
 def print_map(my_map, key_name):
     for k, v in my_map.items():
         print(f'{key_name} {k} --> {v}')
@@ -78,6 +89,10 @@ def set_subplot_extra_options(ax, d_map, ax_t):
 #     ax
     ax.grid(True)
     ax.set_xlim([0,d_map[f'x_{ax_t}_lim']])
+
+    # ax.set_ylim([0, ax.get_ylim()[1]])
+    # print(f'y lim: {ax.get_ylim()[1]}')
+
 
 #     ax.plt.ylim()([0, 100])
 #     ax.set_aspect('equal', adjustable='box')
@@ -122,7 +137,7 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     fig, axs = plt.subplots(nrows=1, ncols=2, sharex=False, sharey=False, squeeze=False, figsize=(
         data_map['fig_width'], 5), gridspec_kw={'width_ratios': [data_map['width_bes_ratio'], data_map['width_rand_ratio']]})
 
-#     plt.gca().set_aspect('equal', adjustable='box')
+    #     plt.gca().set_aspect('equal', adjustable='box')
 
     ax1, ax2 = axs[0][0], axs[0][1]
 
@@ -134,15 +149,81 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     fig.suptitle(
         f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
 
-#     fig.set_figwidth(data_map['width'])
-#     fig.set_figheight(data_map['hight'])
-#     plt.xscale("log")  #TODO
+    #     fig.set_figwidth(data_map['width'])
+    #     fig.set_figheight(data_map['hight'])
+    #     plt.xscale("log")  #TODO
     plt.show()
     img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
                         f"{data_map['y_bes_label']}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.svg"),
                         format="svg")
+
+
+def plot_one_box(bes_csv, bes_x_name, y_common,
+                            bes_unique_list, data_map):
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+
+
+    prepare_sub_plot(ax, bes_csv, bes_x_name, y_common,
+                     bes_unique_list, data_map, 'bes')
+
+    # fig.suptitle(
+    #     f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
+
+
+    plt.show()
+    img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
+    os.makedirs(img_path, exist_ok=True)
+    fig.savefig(os.path.join(img_path,
+                        f"{data_map['y_bes_label']}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.svg"),
+                        format="svg")
+
+
+
+
+
+def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
+
+    fig, ax = plt.subplots(figsize=(5, 5))
+
+
+    # prepare_sub_plot(ax, csv_f, bes_x_name, y_common,
+    #                  bes_unique_list, data_map, 'bes')
+
+    ax.plot(x_ax, y1_ax, 'ko-', label=f'{data_map["y1_label"]}')
+    ax.plot(x_ax, y2_ax, 'ro:', label=f'{data_map["y2_label"]}')
+
+    set_subplot_extra_options(ax, data_map, 'bes')
+    # plt.legend(loc="upper left")
+    ax.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0., handleheight=3) 
+
+    # fig.suptitle(
+    #     f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
+
+    if data_map['model_name'] == model_name_list[2] :
+        print(f'max: {max(x_ax)}')
+        tick_list = np.arange(50, max(x_ax)+100, 50.0)
+        tick_list = np.insert(tick_list, 0, 1)
+        tick_list = np.insert(tick_list, 0, -50)
+        print(f'tick_list = {tick_list}')
+        plt.xticks(tick_list, rotation=45)
+    else:
+        plt.xticks(np.arange(min(x_ax), max(x_ax)+1, 1.0))
+    
+
+
+    plt.show()
+    img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
+    os.makedirs(img_path, exist_ok=True)
+    fig.savefig(os.path.join(img_path,
+                        f"trie_vs_actual_{data_map['model_name']}_{data_map['loopOpt']}.svg"),
+                        format="svg")
+
+
+
+
 
 
 def get_csv_unique(model_name, loopOpt):
@@ -162,3 +243,43 @@ def get_csv_unique(model_name, loopOpt):
     print(f'u_random: {u_random}')
 
     return (bes_csv, random_csv, u_bes, u_random)
+
+
+
+
+def to_latex(title, over_bound_list):
+    data = []
+    # print(over_bound_list)
+    for key in over_bound_list:
+        # print(e)
+        data.append(f'{key} & {over_bound_list[key][0]}        \\\\ \\hline')
+
+    string_data = '\n'.join(data)
+    table_total = f'''\\begin{{table}}[{title}]
+\\begin{{tabular}}{{|c|c|}}
+\\hline
+& Depth & Total number of tests generated by the trie \\\\ \\hline \\hline
+{string_data}
+\end{{tabular}}
+\end{{table}}'''
+
+    return table_total
+
+
+def to_latex_compare(title, x, y1, y2):
+    data = []
+    # print(over_bound_list)
+    for i, e in enumerate(x):
+        # print(e)
+        data.append(f'{e} & {y1[i]} & {y2[i]}  \\\\ \\hline')
+
+    string_data = '\n'.join(data)
+    table_total = f'''\\begin{{table}}[{title}]
+\\begin{{tabular}}{{|c||c|c|}}
+\\hline
+& Depth & Total number of tests generated by the trie & Actual number of tests generated by Modbat \\\\ \\hline \\hline
+{string_data}
+\end{{tabular}}
+\end{{table}}'''
+
+    return table_total
