@@ -202,7 +202,11 @@ def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
     # fig.suptitle(
     #     f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
 
-    if data_map['model_name'] == model_name_list[2] :
+    if data_map['model_name'] == model_name_list[2] and data_map['loopOpt'] == 'no_loops':
+        #
+        plt.xticks(np.arange(min(x_ax), max(x_ax)+1, 1.0))
+
+    elif data_map['model_name'] == model_name_list[2] :
         print(f'max: {max(x_ax)}')
         tick_list = np.arange(50, max(x_ax)+100, 50.0)
         tick_list = np.insert(tick_list, 0, 1)
