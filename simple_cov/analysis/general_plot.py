@@ -104,10 +104,25 @@ def set_subplot_extra_options(ax, d_map, ax_t):
 #     ax.plot(x, y, 'o', label=point_label)
 #     ax.plot(x, res.intercept + res.slope*x, 'r', label=f'p-value: {res.pvalue:.3e}')
 
+def combine_labels_depth(current_list, depth_list):
+    res = []
+    for i, e in enumerate(current_list):
+        res.append(f'{e} ({depth_list[i]})')
 
-def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map, graph_type):
+    # print(res)
+    # res= ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i']
+    return res
+
+def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map, graph_type, depth_list=[]):
     all_data = extract_unique_as_array(csv_f, unique_list, x_name, y_name)
     labels = unique_list
+
+    if graph_type == 'rand':
+        print("-----------here          --------------------")
+        labels = combine_labels_depth(unique_list, depth_list)
+
+    # print(f'all data after:  {all_data}')
+    print(f'labels after:  {labels}')
     if data_map['need_positions'] == True and graph_type == 'rand':
         # pos = np.logspace(1,5, len(unique_list))
 
@@ -120,13 +135,13 @@ def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map, graph_typ
         
 
     else:
-        pos = labels
+        # pos = labels
 
         bplot1 = ax.boxplot(all_data,
                         labels=labels)  
 
     if data_map['need_xtick'] == True:
-        ax.set_xticklabels(unique_list, rotation=40)
+        ax.set_xticklabels(labels, rotation=40)
 
 
     set_subplot_extra_options(ax, data_map, graph_type)
@@ -146,7 +161,7 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     prepare_sub_plot(ax1, bes_csv, bes_x_name, y_common,
                      bes_unique_list, data_map, 'bes')
     prepare_sub_plot(ax2, rand_csv, rand_x_name, y_common,
-                     rand_unique_list, data_map, 'rand')
+                     rand_unique_list, data_map, 'rand', bes_unique_list)
 
     fig.suptitle(
         f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
