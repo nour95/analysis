@@ -86,9 +86,11 @@ def set_subplot_extra_options(ax, d_map, ax_t):
     ax.set_title(f"{d_map[f'{ax_t}_title']}")
     ax.set_xlabel(f"{d_map[f'x_{ax_t}_label']}")
     ax.set_ylabel(f"{d_map[f'y_{ax_t}_label']}")
-#     ax
     ax.grid(True)
     ax.set_xlim([0,d_map[f'x_{ax_t}_lim']])
+
+    if d_map['need_y_limit'] == True:
+        ax.set_ylim([0,d_map[f'y_{ax_t}_lim']])
 
     # ax.set_ylim([0, ax.get_ylim()[1]])
     # print(f'y lim: {ax.get_ylim()[1]}')
@@ -202,7 +204,7 @@ def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
     # fig.suptitle(
     #     f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
 
-    if data_map['model_name'] == model_name_list[2] and data_map['loopOpt'] == 'no_loops':
+    if data_map['model_name'] == model_name_list[2] and data_map['loopOpt'] == 'True':
         #
         plt.xticks(np.arange(min(x_ax), max(x_ax)+1, 1.0))
 
