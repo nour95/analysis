@@ -71,13 +71,20 @@ def print_map(my_map, key_name):
         print (f'{key_name} {k} --> {v}')
 
         
-def set_subplot_extra_options(ax, d_map):
+def set_subplot_extra_options(ax, d_map, ax_t):
 
-    ax.set_title(f"{d_map['title']}")
-    ax.set_xlabel(f"{d_map['x_label']}")
-    ax.set_ylabel(f"{d_map['y_label']}")
+    ax.set_title(f"{d_map[f'{ax_t}_title']}")
+    ax.set_xlabel(f"{d_map[f'x_{ax_t}_label']}")
+    ax.set_ylabel(f"{d_map[f'y_{ax_t}_label']}")
     ax.grid(True)
+    # ax.set_xlim([0,d_map[f'x_{ax_t}_lim']])
+
     
+    if d_map['need_y_limit'] == True:
+        ax.set_ylim([0,d_map[f'y_{ax_t}_lim']])
+
+    # ax.set_xlim([0,d_map[f'x_{ax_t}_lim']])
+
 #     ax.plt.ylim()([0, 100])
 #     ax.set_aspect('equal', adjustable='box')
 #     ax.legend()
@@ -87,33 +94,51 @@ def set_subplot_extra_options(ax, d_map):
 #     ax.plot(x, res.intercept + res.slope*x, 'r', label=f'p-value: {res.pvalue:.3e}')
     
 
+def combine_labels_depth(current_list, depth_list):
+    res = []
+    for i, e in enumerate(current_list):
+        res.append(f'{e} ({depth_list[i]})')
 
-def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map):
+    return res
+
+def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map, graph_type, depth_list=[]):
     all_data = extract_unique_as_array(csv_f, unique_list, x_name, y_name)
     labels = unique_list
-    bplot1 = ax.boxplot(all_data,
-#                          vert=True,  # vertical box alignment
-#                          patch_artist=True,  # fill with color
+
+    if data_map['need_positions'] == True and graph_type == 'rand':
+
+        labels = combine_labels_depth(unique_list, depth_list)
+        bplot1 = ax.boxplot(all_data,
+                        positions=data_map['positions'],
+                        widths= [data_map[f'box_width_{graph_type}']]*len(unique_list), 
+                        labels=labels)
+
+
+    else:
+        bplot1 = ax.boxplot(all_data,
                          labels=labels)  # will be used to label x-ticks
-#     set_subplot_extra_options(bplot1)
-    set_subplot_extra_options(ax, data_map)
+
+    if data_map['need_xtick'] == True:
+        ax.set_xticklabels(labels, rotation=40)
+
+    set_subplot_extra_options(ax, data_map, graph_type)
     
-#     ymin, ymax = plt.ylim()
-#     plt.ylim( 0.5, ymax * 0.5)
 
 
 def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_common, 
-                             bes_unique_list, rand_unique_list, map_bes, map_rand):
+                             bes_unique_list, rand_unique_list, data_map):
     
     fig, axs = plt.subplots(nrows=1, ncols=2, sharex=False, sharey=False, squeeze=False, figsize=(14, 5)
-                           ,gridspec_kw={'width_ratios': [map_bes['width_ratio'], map_rand['width_ratio']]})
+                           ,gridspec_kw={'width_ratios': [data_map['width_bes_ratio'], data_map['width_rand_ratio']]})
     
 #     plt.gca().set_aspect('equal', adjustable='box')
 
     ax1, ax2 = axs[0][0], axs[0][1]
     
-    prepare_sub_plot(ax1, bes_csv, bes_x_name, y_common, bes_unique_list, map_bes)
-    prepare_sub_plot(ax2, rand_csv, rand_x_name, y_common, rand_unique_list, map_rand)
+    prepare_sub_plot(ax1, bes_csv, bes_x_name, y_common, 
+                        bes_unique_list, data_map, 'bes')
+    prepare_sub_plot(ax2, rand_csv, rand_x_name, y_common, 
+                        rand_unique_list, data_map, 'rand', bes_unique_list)
     
 #     fig.suptitle(f"BES VS RS in terms of {map_bes['y_label']} for {map_bes['model_name']}", y=map_bes['distance_to_figures'])
     
@@ -121,10 +146,10 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
 #     fig.set_figheight(map_bes['hight'])
     
     plt.show()
-    img_path = os.path.join(img_general_path, f"{map_bes['model_name']}")
+    img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
-                        f"{map_bes['y_label']}_bes_rand_{map_bes['model_name']}_{map_bes['loopOpt']}.svg"), 
+                        f"{data_map['y_bes_label']}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.svg"), 
                         format="svg")
 
     
@@ -166,7 +191,7 @@ def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
     ax.plot(x_ax, y1_ax, 'ko-', label=f'{data_map["y1_label"]}')
     ax.plot(x_ax, y2_ax, 'ro:', label=f'{data_map["y2_label"]}')
 
-    set_subplot_extra_options(ax, data_map)
+    set_subplot_extra_options(ax, data_map, 'bes')
     # plt.legend(loc="upper left")
     ax.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0., handleheight=3) 
 
