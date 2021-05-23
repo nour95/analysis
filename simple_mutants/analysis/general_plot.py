@@ -227,17 +227,17 @@ def plot_4_bars(labels, data_list, d_map):
     
     rects4 = ax.bar(x - 3*indent, rand_no_l[0], width, label=d_map['random_no_l_label'], edgecolor='black', color='white', hatch='//')
     rects1 = ax.bar(x - indent, bes_l[0], width, label=d_map['bes_l_label'], edgecolor='black', color='#9FACCE', hatch='O')
-    rects2 = ax.bar(x + indent, rand_l[0], width, label=d_map['random_l_label'], edgecolor='black', color='#617CB3', hatch='.')
+    rects2 = ax.bar(x + indent, rand_l[0], width, label=d_map['random_l_label'], edgecolor='black', color='#617CB3', hatch='x')
     
-    rects3 = ax.bar(x + 3*indent, bes_no_l[0], width, label=d_map['bes_no_l_label'], edgecolor='black', color='#0061B5', hatch='x') # 0061B5  # 004E90
+    rects3 = ax.bar(x + 3*indent, bes_no_l[0], width, label=d_map['bes_no_l_label'], edgecolor='black', color='#0061B5', hatch='.') # 0061B5  # 004E90
 
 
     #time outs:
     time4 = ax.bar(x - 3*indent, rand_no_l[1], width, label=f'{d_map["random_no_l_label"]} timeout', edgecolor='black', color='white', hatch='//-')
     time1 = ax.bar(x - indent, bes_l[1], width, label=f'{d_map["bes_l_label"]} timeout', edgecolor='black', color='#9FACCE', hatch='O-')
-    time2 = ax.bar(x + indent, rand_l[1], width, label=f'{d_map["random_l_label"]} timeout', edgecolor='black', color='#617CB3', hatch='.-')
+    time2 = ax.bar(x + indent, rand_l[1], width, label=f'{d_map["random_l_label"]} timeout', edgecolor='black', color='#617CB3', hatch='x-')
     
-    time3 = ax.bar(x + 3*indent, bes_no_l[1], width, label=f'{d_map["bes_no_l_label"]} timeout',  edgecolor='black', color='#0061B5', hatch='x-')
+    time3 = ax.bar(x + 3*indent, bes_no_l[1], width, label=f'{d_map["bes_no_l_label"]} timeout',  edgecolor='black', color='#0061B5', hatch='.-')
 
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
@@ -276,11 +276,17 @@ def plot_2_bars(labels, data_list, d_map):
 
     fig, ax = plt.subplots(figsize=(d_map['fig_width'], d_map['fig_hight']))
 
-    rects1 = ax.bar(x - indent, bes_l[0], width, label=d_map['bes_l_label'], edgecolor='black', color='white', hatch='.')
-    rects3 = ax.bar(x + indent, bes_no_l[0], width, label=d_map['bes_no_l_label'], edgecolor='black', color='#9FACCE', hatch='x')
+    # print(len(bes_l[0]))
+    # # print(bes_no_l[0])
+    # print(len(x))
+    # print(len(labels))
 
-    time1 = ax.bar(x - indent, bes_l[1], width, label=f'{d_map["bes_l_label"]} timeout', edgecolor='black', color='white', hatch='.-')
-    time3 = ax.bar(x + indent, bes_no_l[1], width, label=f'{d_map["bes_no_l_label"]} timeout',  edgecolor='black', color='#9FACCE', hatch='x-')
+
+    rects1 = ax.bar(x - indent, bes_l[0], width, label=d_map['bes_l_label'], edgecolor='black', color='white', hatch='O')
+    rects3 = ax.bar(x + indent, bes_no_l[0], width, label=d_map['bes_no_l_label'], edgecolor='black', color='#9FACCE', hatch='.')
+
+    time1 = ax.bar(x - indent, bes_l[1], width, label=f'{d_map["bes_l_label"]} timeout', edgecolor='black', color='white', hatch='O-')
+    time3 = ax.bar(x + indent, bes_no_l[1], width, label=f'{d_map["bes_no_l_label"]} timeout',  edgecolor='black', color='#9FACCE', hatch='.-')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_xlabel(d_map['x_label'])
