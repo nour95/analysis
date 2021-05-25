@@ -1,8 +1,8 @@
 model_name,search,loop,mutant_number,depth,actual_tests,time_taken,status,return_code,failed_tests,seed
-SimpleModel,random,no_loops,2,2,1,1.2038929462432861,killed_mutant,0,1,10f910d3
-SimpleModel,random,no_loops,3,2,2,0.9884650707244873,killed_mutant,0,1,526e92fd
-SimpleModel,random,no_loops,4,2,2,1.0772380828857422,killed_mutant,0,1,3ef92ca
-SimpleModel,random,no_loops,5,2,2,1.2603740692138672,killed_mutant,0,1,6068971d
-SimpleModel,random,no_loops,6,2,1,1.573737382888794,killed_mutant,0,1,32f9bd3b
-SimpleModel,random,no_loops,7,2,2,1.318490982055664,killed_mutant,0,1,2fc5ccb
-SimpleModel,random,no_loops,9,2,1,1.4012291431427002,killed_mutant,0,1,2bddaf0c
+SimpleModel,random,no_loops,2,2,1,0.62516188621521,killed_mutant,0,1,6108b64a
+SimpleModel,random,no_loops,3,5,4,0.5721862316131592,killed_mutant,0,1,5cd8211c
+SimpleModel,random,no_loops,4,2,1,0.6340160369873047,killed_mutant,0,1,2595be2b
+SimpleModel,random,no_loops,5,2,1,0.609774112701416,killed_mutant,0,1,61d72777
+SimpleModel,random,no_loops,6,2,2,0.6174383163452148,killed_mutant,0,1,138c7ad9
+SimpleModel,random,no_loops,7,2,2,0.5802161693572998,killed_mutant,0,1,809f0f5
+SimpleModel,random,no_loops,9,2,1,0.7202010154724121,killed_mutant,0,1,cb948e2
