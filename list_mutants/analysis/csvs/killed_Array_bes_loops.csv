@@ -16,5 +16,5 @@ Array,bes,loops,76,4,495,3.450725793838501,killed_mutant,0,1,71d798f3
 Array,bes,loops,77,2,65,1.8978030681610107,killed_mutant,0,1,21caa194
 Array,bes,loops,80,2,7,1.4740569591522217,killed_mutant,0,1,433e6bd1
 Array,bes,loops,81,4,495,4.216195106506348,killed_mutant,0,1,71d798f3
-Array,bes,loops,88,1,1,1.2322921752929688,invoke_error,1,0,141eb415
+Array,bes,loops,88,1,1,1.2322921752929688,invoke_error,1,1,141eb415
 Array,bes,loops,100,3,80,1.8405160903930664,killed_mutant,0,1,4f39bb93

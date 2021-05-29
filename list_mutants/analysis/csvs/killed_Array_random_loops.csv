@@ -19,7 +19,7 @@ Array,random,loops,76,9,1,1.677259922027588,killed_mutant,0,1,7fcda307
 Array,random,loops,77,9,1,1.7819550037384033,killed_mutant,0,1,4d6c8d68
 Array,random,loops,80,9,1,1.7827050685882568,killed_mutant,0,1,511598bf
 Array,random,loops,81,9,1,1.8425769805908203,killed_mutant,0,1,1eeda500
-Array,random,loops,88,9,1,1.47670316696167,invoke_error,1,0,ff514d4
+Array,random,loops,88,9,1,1.47670316696167,invoke_error,1,1,ff514d4
 Array,random,loops,89,9,1,2.4449212551116943,killed_mutant,0,1,49d83d6a
 Array,random,loops,97,9,1,1.6985220909118652,killed_mutant,0,1,68fff09
 Array,random,loops,98,9,3,1.73757004737854,killed_mutant,0,1,13b4d269
