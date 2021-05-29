@@ -257,8 +257,8 @@ def plot_4_bars(labels, data_list, d_map):
     img_path = os.path.join(img_general_path, f"{d_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
-            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.svg"), 
-            format="svg")
+            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.pdf"), 
+            format="pdf")
 
 
 
@@ -301,8 +301,8 @@ def plot_2_bars(labels, data_list, d_map):
     img_path = os.path.join(img_general_path, f"{d_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
-            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.svg"), 
-            format="svg")
+            f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.pdf"), 
+            format="pdf")
 
 
 

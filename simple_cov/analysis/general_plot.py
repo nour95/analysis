@@ -239,8 +239,8 @@ def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
     img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
-                        f"trie_vs_actual_{data_map['model_name']}_{data_map['loopOpt']}.svg"),
-                        format="svg")
+                        f"trie_vs_actual_{data_map['model_name']}_{data_map['loopOpt']}.pdf"),
+                        format="pdf")
 
 
 
