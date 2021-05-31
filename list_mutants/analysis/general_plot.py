@@ -26,6 +26,13 @@ os.makedirs(csv_path, exist_ok=True)
 # os.makedirs(img_general_path, exist_ok=True)
 
 
+def bool_to_shortcut(s):
+    if s == False:
+        return "L"
+    else: 
+        return "nL"
+    
+
 def list_dir(path):
     return [p for p in os.listdir(path) if p[0] != '.']
 

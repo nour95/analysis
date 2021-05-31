@@ -32,6 +32,14 @@ want_to_extract = ['time_taken', 'total_tests', 'failed_tests', 'nc', 'ec', 'tot
 needed_data_as_table = ['trie_total_path', 'total_nodes', 'total_edges', 'node_covered', 'edge_covered']
 
 
+def bool_to_shortcut(s):
+    if s == False:
+        return "L"
+    else: 
+        return "nL"
+    
+
+
 # functions:
 def get_unique_rows(csv, row_name):
     return csv[row_name].unique()
@@ -43,6 +51,13 @@ def bool_to_str(loopOption):
     else:
         return "loops"
 
+    
+def bool_to_shortcut(s):
+    if s == False:
+        return "L"
+    else: 
+        return "nL"
+    
     
 def extract_unique_as_array(csv_file, unique_depths, unique_field, by_field):
     res = []
@@ -144,13 +159,14 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     
 #     fig.set_figwidth(map_bes['width'])
 #     fig.set_figheight(map_bes['hight'])
-    
+
+    plt.tight_layout()    
     plt.show()
     img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
                         f"{data_map['y_bes_label']}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.pdf"), 
-                        format="pdf")
+                        format="pdf", bbox_inches='tight')
 
     
 def get_csv_unique(model_name, loopOpt):  

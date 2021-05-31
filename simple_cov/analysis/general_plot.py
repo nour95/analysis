@@ -39,7 +39,14 @@ def bool_to_str(loopOption):
         return "no_loops"
     else:
         return "loops"
-
+    
+    
+def bool_to_shortcut(s):
+    if s == False:
+        return "L"
+    else: 
+        return "nL"
+    
 
 def extract_unique_as_array(csv_file, unique_depths, unique_field, by_field):
     res = []
@@ -169,12 +176,13 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     #     fig.set_figwidth(data_map['width'])
     #     fig.set_figheight(data_map['hight'])
     #     plt.xscale("log")  #TODO
-    plt.show()
+    # plt.tight_layout()    
     img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
                         f"{data_map['y_bes_label']}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.pdf"),
-                        format="pdf")
+                        format="pdf", bbox_inches='tight')
+    plt.show()
 
 
 def plot_one_box(bes_csv, bes_x_name, y_common,
