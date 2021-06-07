@@ -20,6 +20,11 @@ system_map = {
 }
 
 
+model_name_to_view_list = [
+    'ArrayList Model',
+    'LinkedList Model'
+]
+
 csv_path = f'csvs'
 img_general_path = f'images'
 os.makedirs(csv_path, exist_ok=True)
@@ -265,7 +270,7 @@ def plot_4_bars(labels, data_list, d_map):
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
             f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.pdf"), 
-            format="pdf")
+            format="pdf", bbox_inches='tight' )
 
 
 
@@ -309,7 +314,7 @@ def plot_2_bars(labels, data_list, d_map):
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
             f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}_{d_map['other']}.pdf"), 
-            format="pdf")
+            format="pdf", bbox_inches='tight')
 
 
 

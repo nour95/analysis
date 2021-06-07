@@ -96,7 +96,8 @@ def set_subplot_extra_options(ax, d_map, ax_t):
 
     
     if d_map['need_y_limit'] == True:
-        ax.set_ylim([0,d_map[f'y_{ax_t}_lim']])
+        # ax.set_ylim([0,d_map[f'y_{ax_t}_lim']])
+        ax.set_ylim([d_map['y_min_lim'], d_map[f'y_{ax_t}_lim']])
 
     # ax.set_xlim([0,d_map[f'x_{ax_t}_lim']])
 
@@ -160,7 +161,7 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
 #     fig.set_figwidth(map_bes['width'])
 #     fig.set_figheight(map_bes['hight'])
 
-    plt.tight_layout()    
+    # plt.tight_layout()    
     plt.show()
     img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
@@ -225,7 +226,7 @@ def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
                         f"trie_vs_actual_{data_map['model_name']}_{data_map['loopOpt']}.pdf"),
-                        format="pdf")
+                        format="pdf", bbox_inches='tight')
 
 
 

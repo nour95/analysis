@@ -16,6 +16,11 @@ system_map = {
     'SimpleModel' : ['SimpleCounterBES']
 }
 
+model_name_to_view_list = [
+    'Elevator Model',
+    'JNSS Model', 'Simple Model'
+]
+
 csv_path = f'csvs'
 img_general_path = f'images'
 os.makedirs(csv_path, exist_ok=True)
@@ -251,7 +256,7 @@ def plot_4_bars(labels, data_list, d_map):
 
 
 
-    fig.tight_layout()
+    # fig.tight_layout()
     
     ax.set_xlim([-3*width, d_map['x_lim']])
     ax.set_ylim([0, d_map['y_lim']])
@@ -261,7 +266,7 @@ def plot_4_bars(labels, data_list, d_map):
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
             f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}.pdf"), 
-            format="pdf")
+            format="pdf", bbox_inches='tight')
 
 
 
@@ -307,7 +312,7 @@ def plot_2_bars(labels, data_list, d_map):
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
             f"{d_map['comp_type']}_mutants_comparison_for_{d_map['model_name']}.pdf"), 
-            format="pdf")
+            format="pdf", bbox_inches='tight')
 
 
 

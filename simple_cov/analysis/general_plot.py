@@ -9,6 +9,10 @@ model_name_list = [
     'JavaNioServerSocket3', 'SimpleModel'
 ]
 
+model_name_to_view_list = [
+    'Elevator Model',
+    'JNSS Model', 'Simple Model'
+]
 
 # system_map = {
 #     'ElevatorModel' : ['ElevatorSystem'],
@@ -43,6 +47,13 @@ def bool_to_str(loopOption):
     
 def bool_to_shortcut(s):
     if s == False:
+        return "L"
+    else: 
+        return "nL"
+
+
+def str_to_shortcut(s):
+    if s == "loops":
         return "L"
     else: 
         return "nL"
@@ -97,7 +108,7 @@ def set_subplot_extra_options(ax, d_map, ax_t):
     ax.set_xlim([0,d_map[f'x_{ax_t}_lim']])
 
     if d_map['need_y_limit'] == True:
-        ax.set_ylim([0,d_map[f'y_{ax_t}_lim']])
+        ax.set_ylim([d_map['y_min_lim'], d_map[f'y_{ax_t}_lim']])
 
     # ax.set_ylim([0, ax.get_ylim()[1]])
     # print(f'y lim: {ax.get_ylim()[1]}')
@@ -171,7 +182,7 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
                      rand_unique_list, data_map, 'rand', bes_unique_list)
 
     fig.suptitle(
-        f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
+        f"BES{str_to_shortcut(data_map['loopOpt'])} VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name_to_view']}", y=data_map['distance_to_figures'])
 
     #     fig.set_figwidth(data_map['width'])
     #     fig.set_figheight(data_map['hight'])
@@ -185,6 +196,34 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     plt.show()
 
 
+
+def plot_one_box_new(bes_csv, rand_csv, bes_x_name, rand_x_name, y_common,
+                             bes_unique_list, rand_unique_list, data_map, alg):
+
+    fig, ax1 = plt.subplots(figsize=(6, 6))
+
+
+    if alg == "RS":
+        prepare_sub_plot(ax1, rand_csv, rand_x_name, y_common,
+                     rand_unique_list, data_map, 'rand', bes_unique_list)
+    else:
+        prepare_sub_plot(ax1, bes_csv, bes_x_name, y_common,
+                     bes_unique_list, data_map, 'bes')
+
+    # fig.suptitle(
+    #     f"Zooming in {alg} in terms of {data_map['y_bes_label']} for {data_map['model_name_to_view']}", y=data_map['distance_to_figures'])
+
+   
+    img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
+    os.makedirs(img_path, exist_ok=True)
+    fig.savefig(os.path.join(img_path,
+                        f"{data_map['y_bes_label']}_alg_{data_map['model_name']}_{data_map['loopOpt']}_special.pdf"),
+                        format="pdf", bbox_inches='tight')
+    plt.show()
+
+
+
+
 def plot_one_box(bes_csv, bes_x_name, y_common,
                             bes_unique_list, data_map):
 
@@ -193,6 +232,8 @@ def plot_one_box(bes_csv, bes_x_name, y_common,
 
     prepare_sub_plot(ax, bes_csv, bes_x_name, y_common,
                      bes_unique_list, data_map, 'bes')
+    # prepare_sub_plot(ax, bes_csv, bes_x_name, y_common,
+    #                  bes_unique_list, data_map, 'rand')
 
     # fig.suptitle(
     #     f"BES VS RS in terms of {data_map['y_bes_label']} for {data_map['model_name']}", y=data_map['distance_to_figures'])
@@ -203,7 +244,7 @@ def plot_one_box(bes_csv, bes_x_name, y_common,
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
                         f"{data_map['y_bes_label']}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.pdf"),
-                        format="pdf")
+                        format="pdf", bbox_inches='tight')
 
 
 
@@ -230,12 +271,13 @@ def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
     if data_map['model_name'] == model_name_list[2] and data_map['loopOpt'] == 'no_loops':
         #
         plt.xticks(np.arange(min(x_ax), max(x_ax)+1, 1.0))
+        plt.yticks(np.arange(0, max(y1_ax)+1, 1.0))
 
     elif data_map['model_name'] == model_name_list[2] :
         print(f'max: {max(x_ax)}')
         tick_list = np.arange(50, max(x_ax)+100, 50.0)
         tick_list = np.insert(tick_list, 0, 1)
-        tick_list = np.insert(tick_list, 0, -50)
+        # tick_list = np.insert(tick_list, 0, -50)
         print(f'tick_list = {tick_list}')
         plt.xticks(tick_list, rotation=45)
     else:
@@ -248,7 +290,7 @@ def plot_one_linear(x_ax, y1_ax, y2_ax, data_map):
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
                         f"trie_vs_actual_{data_map['model_name']}_{data_map['loopOpt']}.pdf"),
-                        format="pdf")
+                        format="pdf", bbox_inches='tight')
 
 
 
