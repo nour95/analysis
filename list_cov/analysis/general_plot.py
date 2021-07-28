@@ -117,6 +117,14 @@ def combine_labels_depth(current_list, depth_list):
 
     return res
 
+def get_size_list_given_depth(csv_f, depth_list):
+    res = []
+    for depth in depth_list:
+        x = csv_f[csv_f['depth'] == depth]['total_tests'].tolist()[0]
+        # print(x)
+        res.append(x)
+    return res
+
 def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map, graph_type, depth_list=[]):
     all_data = extract_unique_as_array(csv_f, unique_list, x_name, y_name)
     labels = unique_list
@@ -130,9 +138,21 @@ def prepare_sub_plot(ax, csv_f, x_name, y_name, unique_list, data_map, graph_typ
                         labels=labels)
 
 
-    else:
+    # else:
+    #     bplot1 = ax.boxplot(all_data,
+    #                      labels=labels)  # will be used to label x-ticks
+    elif graph_type == 'rand':
         bplot1 = ax.boxplot(all_data,
-                         labels=labels)  # will be used to label x-ticks
+                        labels=labels)  
+    else: 
+        # pos = labels
+        total_list = get_size_list_given_depth(csv_f, unique_list)
+        print(f'total_list: {total_list}')
+        labels = combine_labels_depth(unique_list, total_list)
+        print(f'labels2: {labels}')
+
+        bplot1 = ax.boxplot(all_data,
+                        labels=labels)  
 
     if data_map['need_xtick'] == True:
         ax.set_xticklabels(labels, rotation=40)
@@ -166,7 +186,7 @@ def compare_bes_rand_given_y(bes_csv, rand_csv, bes_x_name, rand_x_name, y_commo
     img_path = os.path.join(img_general_path, f"{data_map['model_name']}")
     os.makedirs(img_path, exist_ok=True)
     fig.savefig(os.path.join(img_path,
-                        f"{data_map['y_bes_label']}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.pdf"), 
+                        f"{data_map['y_bes_label'].split(' (')[0]}_bes_rand_{data_map['model_name']}_{data_map['loopOpt']}.pdf"), 
                         format="pdf", bbox_inches='tight')
 
     
